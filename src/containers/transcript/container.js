@@ -63,7 +63,19 @@ const Container = ({ children }) => {
     )
   }
 
+  const handleTranscriptHighlight = (time, jump = false) => {
+    const widthAllowance = 0
+    const highlight = document.getElementById('wave-highlight')
+    highlight.style.width = ((time / audioRef.current.duration) * (100 + widthAllowance)) + '%'
+    if (jump) {
+      audioRef.current.currentTime = time
+      handleEnd()
+      audioRef.current.play()
+    }
+  }
+
   const onTimeUpdate = () => {
+    handleTranscriptHighlight(audioRef.current.currentTime)
     handleTranscriptProgress(audioRef.current.currentTime)
     dispatch(
       setAudioProgress({
@@ -73,11 +85,15 @@ const Container = ({ children }) => {
     )
   }
 
-  const onEnded = () => {
+  const handleEnd = () => {
     dispatch(
       setActiveTranscript('')
     )
     wordsRef.current[wordsRef.current.length - 1].classList.remove('highlight-text')
+  }
+
+  const onEnded = () => {
+    handleEnd()
   }
 
   const handleAudioToggle = () => {
@@ -124,6 +140,7 @@ const Container = ({ children }) => {
     formatTime,
     truncateLastChar,
     handleAudioToggle,
+    handleTranscriptHighlight,
     computeWaveLength,
     computeTotalWavePercentage,
     onLoadedData,

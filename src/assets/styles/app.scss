@@ -63,11 +63,22 @@
 }
 
 #wave-bars {
-  // padding: 22px;
+  position: relative;
   margin-left: 22px;
   margin-right: 22px;
   margin-bottom: 22px;
-  // border: 1px solid #ccc;
+  width: 97%;
+  max-width: 1400px;
+  overflow: hidden;
+
+  #wave-highlight {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(26, 153, 246, 0.15);
+    z-index: -1;
+    max-width: 1400px;
+  }
 
   .divider {
     border-bottom: 1px solid #dfe2e5;
@@ -77,6 +88,7 @@
   .wave-bar {
     display: inline-block;
     height: 25px;
+    cursor: pointer;
   }
 
   .you-percentage {

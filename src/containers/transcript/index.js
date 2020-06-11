@@ -12,6 +12,7 @@ export default () => (
       wordsRef,
       formatTime,
       handleAudioToggle,
+      handleTranscriptHighlight,
       computeWaveLength,
       computeTotalWavePercentage,
       onLoadedData,
@@ -26,6 +27,7 @@ export default () => (
           onTimeUpdate={onTimeUpdate}
           onEnded={onEnded}
           handleAudioToggle={handleAudioToggle}
+          handleTranscriptHighlight={handleTranscriptHighlight}
         />
 
         {/* AUDIO TIME PROGRESS */}
@@ -40,6 +42,7 @@ export default () => (
             {audioRef.current && !isNaN(audioRef.current.duration) && (
               <WaveBarsComponent
                 wordTimings={state.transcript.word_timings}
+                handleTranscriptHighlight={handleTranscriptHighlight}
                 computeWaveLength={computeWaveLength}
                 computeTotalWavePercentage={computeTotalWavePercentage}
                 audioRef={audioRef}
