@@ -1,36 +1,22 @@
-import * as React from 'react'
+import React from 'react'
 import ComponentContainer from './container'
-import PauseImage from '../../assets/images/pause.png'
-import PlayImage from '../../assets/images/play.png'
-import RotateLeft from '../../assets/images/rotate-left.svg'
-import RotateRight from '../../assets/images/rotate-right.svg'
+import AppHeaderComponent from '../../components/AppHeader'
+import AudioProgressComponent from '../../components/AudioProgress'
 
 export default () => (
   <ComponentContainer>
-    {({ state, audioRef, wordsRef, handleAudioToggle, onTimeUpdate, onEnded }) => (
+    {({ state, audioRef, wordsRef, formatTime, handleAudioToggle, onTimeUpdate, onEnded }) => (
       <div>
-        <div id='header'>
-          <audio
-            controls
-            ref={audioRef}
-            onTimeUpdate={onTimeUpdate}
-            onEnded={onEnded}
-          />
-          {audioRef.current && (
-            <div className='audio-control'>
-              <img src={RotateLeft} className='control-left' />
-              <img
-                onClick={handleAudioToggle}
-                className='control'
-                src={audioRef.current.paused ? PlayImage : PauseImage}
-              />
-              <img src={RotateRight} className='control-right' />
-            </div>
-          )}
-        </div>
-        <div className='audio-progress'>
-          <span className='from'>{state.audioProgress.from}</span> / {state.audioProgress.to}
-        </div>
+        <AppHeaderComponent
+          audioRef={audioRef}
+          onTimeUpdate={onTimeUpdate}
+          onEnded={onEnded}
+          handleAudioToggle={handleAudioToggle}
+        />
+        <AudioProgressComponent
+          from={state.audioProgress.from}
+          to={state.audioProgress.to}
+        />
         {state.transcript && (
           <>
             {state.transcript.word_timings.map((word, index) => (
@@ -39,7 +25,7 @@ export default () => (
                 className={`transcript ${index % 2 !== 0 && 'indent'} ${state.activeTranscript === index && 'highlight'}`}
               >
                 <div className='time'>
-                  03:25
+                  {formatTime(Number(word[0].startTime.substring(0, word[0].startTime.length - 1)))}
                 </div>
                 <div className='script'>
                   {word.map((row, wordIndex) => (

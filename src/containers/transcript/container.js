@@ -27,12 +27,14 @@ const Container = ({ children }) => {
   }, [state.transcript])
 
   useEffect(() => {
-    dispatch(
-      setAudioProgress({
-        from: state.audioProgress.from,
-        to: formatTime(audioRef.current.duration || 0)
-      })
-    )
+    if (audioRef.current) {
+      dispatch(
+        setAudioProgress({
+          from: state.audioProgress.from,
+          to: formatTime(audioRef.current.duration || 0)
+        })
+      )
+    }
   }, [audioRef.current])
 
   const handleTranscriptProgress = time => {
@@ -92,6 +94,7 @@ const Container = ({ children }) => {
     state,
     audioRef,
     wordsRef,
+    formatTime,
     handleAudioToggle,
     onTimeUpdate,
     onEnded
