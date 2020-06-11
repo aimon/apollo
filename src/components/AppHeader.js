@@ -16,13 +16,13 @@ const AppHeader = ({ audioRef, onLoadedData, onTimeUpdate, onEnded, handleAudioT
     />
     {audioRef.current && (
       <div className='audio-control'>
-        <span className='control-left' onClick={() => handleTranscriptHighlight(audioRef.current.currentTime - 5, true)}>{' '}</span>
+        <span className='control-left' onClick={() => handleTranscriptHighlight(audioRef.current.currentTime - 10, true)}>{' '}</span>
         <img
           onClick={handleAudioToggle}
           className='control'
           src={audioRef.current.paused ? PlayImage : PauseImage}
         />
-        <span className='control-right' onClick={() => handleTranscriptHighlight(audioRef.current.currentTime + 5, true)}>{' '}</span>
+        <span className='control-right' onClick={() => handleTranscriptHighlight(audioRef.current.currentTime + 10, true)}>{' '}</span>
         <select
           className='speed-rate'
           defaultValue='1'
