@@ -6,15 +6,28 @@
   }
   .audio-control {
     display: inline-block;
+    .control-left {
+      background-image: url('../images/rotate-left.svg');
+      &:hover {
+        background-image: url('../images/rotate-left-hover.svg');
+      }
+    }
+    .control-right {
+      background-image: url('../images/rotate-right.svg');
+      &:hover {
+        background-image: url('../images/rotate-right-hover.svg');
+      }
+    }
+    .control-left, .control-right {
+      cursor: pointer;
+      background-repeat: no-repeat;
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      margin-bottom: -5px;
+    }
     img {
       cursor: pointer; 
-      &.control-left:hover {
-        color: #229ffb;
-      }
-      &.control-left, &.control-right {
-        height: 20px;
-      }
-
       &.control {
         height: 36px;
         margin-left: 13px;

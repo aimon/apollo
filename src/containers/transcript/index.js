@@ -5,10 +5,11 @@ import AudioProgressComponent from '../../components/AudioProgress'
 
 export default () => (
   <ComponentContainer>
-    {({ state, audioRef, wordsRef, formatTime, handleAudioToggle, onTimeUpdate, onEnded }) => (
+    {({ state, audioRef, wordsRef, formatTime, handleAudioToggle, onLoadedData, onTimeUpdate, onEnded }) => (
       <div>
         <AppHeaderComponent
           audioRef={audioRef}
+          onLoadedData={onLoadedData}
           onTimeUpdate={onTimeUpdate}
           onEnded={onEnded}
           handleAudioToggle={handleAudioToggle}

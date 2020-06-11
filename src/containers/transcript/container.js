@@ -26,17 +26,6 @@ const Container = ({ children }) => {
     }
   }, [state.transcript])
 
-  useEffect(() => {
-    if (audioRef.current) {
-      dispatch(
-        setAudioProgress({
-          from: state.audioProgress.from,
-          to: formatTime(audioRef.current.duration || 0)
-        })
-      )
-    }
-  }, [audioRef.current])
-
   const handleTranscriptProgress = time => {
     wordsRef.current.map((word, i) => {
       // Word ID attribute
@@ -63,6 +52,15 @@ const Container = ({ children }) => {
         )
       }
     })
+  }
+
+  const onLoadedData = () => {
+    dispatch(
+      setAudioProgress({
+        from: state.audioProgress.from,
+        to: formatTime(audioRef.current.duration)
+      })
+    )
   }
 
   const onTimeUpdate = () => {
@@ -96,6 +94,7 @@ const Container = ({ children }) => {
     wordsRef,
     formatTime,
     handleAudioToggle,
+    onLoadedData,
     onTimeUpdate,
     onEnded
   })
