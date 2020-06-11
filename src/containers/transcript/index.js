@@ -2,11 +2,24 @@ import React from 'react'
 import ComponentContainer from './container'
 import AppHeaderComponent from '../../components/AppHeader'
 import AudioProgressComponent from '../../components/AudioProgress'
+import WaveBarsComponent from '../../components/WaveBars'
 
 export default () => (
   <ComponentContainer>
-    {({ state, audioRef, wordsRef, formatTime, handleAudioToggle, onLoadedData, onTimeUpdate, onEnded }) => (
+    {({
+      state,
+      audioRef,
+      wordsRef,
+      formatTime,
+      handleAudioToggle,
+      computeWaveLength,
+      computeTotalWavePercentage,
+      onLoadedData,
+      onTimeUpdate,
+      onEnded
+    }) => (
       <div>
+        {/* HEADER */}
         <AppHeaderComponent
           audioRef={audioRef}
           onLoadedData={onLoadedData}
@@ -14,12 +27,25 @@ export default () => (
           onEnded={onEnded}
           handleAudioToggle={handleAudioToggle}
         />
+
+        {/* AUDIO TIME PROGRESS */}
         <AudioProgressComponent
           from={state.audioProgress.from}
           to={state.audioProgress.to}
         />
+
         {state.transcript && (
           <>
+            {/* WAVE BARS */}
+            {audioRef.current && !isNaN(audioRef.current.duration) && (
+              <WaveBarsComponent
+                wordTimings={state.transcript.word_timings}
+                computeWaveLength={computeWaveLength}
+                computeTotalWavePercentage={computeTotalWavePercentage}
+                audioRef={audioRef}
+              />
+            )}
+
             {state.transcript.word_timings.map((word, index) => (
               <div
                 key={index}
@@ -32,7 +58,6 @@ export default () => (
                   {word.map((row, wordIndex) => (
                     <span key={JSON.stringify(row)}>
                       <span
-
                         id={row.startTime}
                         data-transcript-index={index}
                         ref={el => {

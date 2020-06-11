@@ -62,11 +62,72 @@
   }
 }
 
+#wave-bars {
+  // padding: 22px;
+  margin-left: 22px;
+  margin-right: 22px;
+  margin-bottom: 22px;
+  // border: 1px solid #ccc;
+
+  .divider {
+    border-bottom: 1px solid #dfe2e5;
+    margin-bottom: 5px;
+  }
+
+  .wave-bar {
+    display: inline-block;
+    height: 25px;
+  }
+
+  .you-percentage {
+    color: #8868e9;
+    font-size: 12px;
+    padding-right: 10px;
+  }
+
+  .you-percentage, .you-name {
+    color: #8868e9;
+    font-size: 12px;
+    padding-right: 10px;
+  }
+
+  .your-wave .wave-bar {
+    &.with-voice {
+      background: repeating-linear-gradient(
+        to right,
+        #8868e9,
+        #8868e9 2px,
+        #ffffff 2px,
+        #ffffff 4px
+      );
+    }
+  }
+
+  .prospect-wave .wave-bar {
+    &.with-voice {
+      background: repeating-linear-gradient(
+        to right,
+        #1a99f6,
+        #1a99f6 2px,
+        #ffffff 2px,
+        #ffffff 4px
+      );
+    }
+    &.space {
+      background-color: transparent;
+    }
+  }
+
+  .prospect-percentage, .prospect-name {
+    color: #1a99f6;
+    font-size: 12px;
+    padding-right: 10px;
+  }
+}
 .transcript {
-  padding: 22px;
+  padding: 11px 22px;
   .time {
     display: inline-table;
-    padding-left: 10px;
     padding-right: 10px;
     vertical-align: top;
     width: 32px;
@@ -95,8 +156,16 @@
 
   &.indent {
     padding-left: 75px;
+    .time {
+      color: #8868e9;
+    }
     .script {
       border-left: solid 2px #e1dafb;
     }
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(26, 153, 246, 0.05);
   }
 }

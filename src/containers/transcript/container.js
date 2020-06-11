@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTranscript, setActiveTranscript, setAudioProgress } from '../../redux/actions'
-import { formatTime } from '../../helpers'
+import { formatTime, truncateLastChar } from '../../helpers'
 import audio from '../../assets/media/transcript.wav'
 
 const Container = ({ children }) => {
@@ -31,7 +31,7 @@ const Container = ({ children }) => {
       // Word ID attribute
       const wordId = String(word.id)
       // Remove last character from id 's' to get actual second
-      const second = Number(wordId.substring(0, wordId.length - 1))
+      const second = Number(truncateLastChar(wordId))
       // Highlight is second s within the bound of currentTime
       if (second < time) {
         // Removed hightlight of previous text
@@ -88,12 +88,44 @@ const Container = ({ children }) => {
     }
   }
 
+  const computeWaveLength = (from, to) => {
+    if (!isNaN(audioRef.current.duration)) {
+      return ((to - from) / audioRef.current.duration) * 100
+    }
+    return 0
+  }
+
+  const computeTotalWavePercentage = (wordTimings, isYou = true) => {
+    if (!isNaN(audioRef.current.duration)) {
+      let totalYou = 0
+      wordTimings.map((word, index) => {
+        word.map(row => {
+          if (index % 2 === 0 && isYou) {
+            totalYou += computeWaveLength(
+              Number(truncateLastChar(row.startTime)),
+              Number(truncateLastChar(row.endTime))
+            )
+          } else if (index % 2 !== 0 && !isYou) {
+            totalYou += computeWaveLength(
+              Number(truncateLastChar(row.startTime)),
+              Number(truncateLastChar(row.endTime))
+            )
+          }
+        })
+      })
+      return totalYou.toFixed(2)
+    }
+  }
+
   return children({
     state,
     audioRef,
     wordsRef,
     formatTime,
+    truncateLastChar,
     handleAudioToggle,
+    computeWaveLength,
+    computeTotalWavePercentage,
     onLoadedData,
     onTimeUpdate,
     onEnded
